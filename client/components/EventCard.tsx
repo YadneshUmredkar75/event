@@ -53,7 +53,7 @@ export default function EventCard({ event }: EventCardProps) {
             <div className="flex items-center gap-1">
               <Ticket size={16} className="text-green-400" />
               <span className="text-green-400 font-bold">
-                ${event.price}
+                ₹{event.price}
               </span>
             </div>
             <button className="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 hover:shadow-lg hover:shadow-purple-500/50 text-white text-sm font-medium transition-all duration-300 group-hover:brightness-110">

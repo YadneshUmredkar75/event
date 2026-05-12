@@ -138,7 +138,7 @@ export default function Artists() {
                             </div>
                             <div className="text-right">
                               <p className="text-green-400 font-bold">
-                                ${event.price}
+                                ₹{event.price}
                               </p>
                               <button className="mt-2 px-4 py-1 rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 text-white text-xs font-semibold transition-all hover:shadow-lg hover:shadow-purple-500/50">
                                 Get Tickets
