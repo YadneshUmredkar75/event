@@ -8,6 +8,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Events from "./pages/Events";
+import Artists from "./pages/Artists";
+import Music from "./pages/Music";
+import About from "./pages/About";
 import Placeholder from "./pages/Placeholder";
 import NotFound from "./pages/NotFound";
 
@@ -31,33 +34,9 @@ const App = () => (
               />
             }
           />
-          <Route
-            path="/artists"
-            element={
-              <Placeholder
-                title="Artists"
-                description="Explore amazing artists and their upcoming events."
-              />
-            }
-          />
-          <Route
-            path="/music"
-            element={
-              <Placeholder
-                title="Music"
-                description="Discover trending songs, playlists, and concert previews."
-              />
-            }
-          />
-          <Route
-            path="/about"
-            element={
-              <Placeholder
-                title="About Us"
-                description="Learn more about EventFinder and our mission."
-              />
-            }
-          />
+          <Route path="/artists" element={<Artists />} />
+          <Route path="/music" element={<Music />} />
+          <Route path="/about" element={<About />} />
           <Route
             path="/contact"
             element={
