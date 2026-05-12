@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Events from "./pages/Events";
+import EventDetails from "./pages/EventDetails";
 import Artists from "./pages/Artists";
 import Music from "./pages/Music";
 import About from "./pages/About";
@@ -25,15 +26,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/events" element={<Events />} />
-          <Route
-            path="/event/:id"
-            element={
-              <Placeholder
-                title="Event Details"
-                description="View full event details, including tickets, venue information, and more."
-              />
-            }
-          />
+          <Route path="/event/:id" element={<EventDetails />} />
           <Route path="/artists" element={<Artists />} />
           <Route path="/music" element={<Music />} />
           <Route path="/about" element={<About />} />
