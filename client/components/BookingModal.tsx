@@ -454,13 +454,76 @@ export default function BookingModal({
               <div className="flex gap-4">
                 <button
                   onClick={() => {
+                    const ticketContent = `
+╔════════════════════════════════════════════════════════════════╗
+║                    EVENT FINDER - E-TICKET                     ║
+╚════════════════════════════════════════════════════════════════╝
+
+TICKET REFERENCE: ${ticket.code}
+
+═══════════════════════════════════════════════════════════════════
+
+EVENT DETAILS:
+─────────────────────────────────────────────────────────────────
+Event Name:        ${ticket.eventTitle}
+Date:              ${ticket.eventDate}
+Ticket Type:       ${ticket.ticketType}
+Number of Tickets: ${ticket.quantity}
+
+═══════════════════════════════════════════════════════════════════
+
+PASSENGER DETAILS:
+─────────────────────────────────────────────────────────────────
+Name:              ${ticket.userName}
+Booking Date:      ${ticket.bookingDate}
+
+═══════════════════════════════════════════════════════════════════
+
+PAYMENT DETAILS:
+─────────────────────────────────────────────────────────────────
+Base Price:        ₹${ticket.totalPrice.toLocaleString('en-IN')}
+Booking Fee (5%):  ₹${Math.round(ticket.totalPrice * 0.05).toLocaleString('en-IN')}
+─────────────────────────────────────────────────────────────────
+TOTAL AMOUNT:      ₹${Math.round(ticket.totalPrice * 1.05).toLocaleString('en-IN')}
+
+Status:            ✓ CONFIRMED & PAID
+
+═══════════════════════════════════════════════════════════════════
+
+IMPORTANT INFORMATION:
+─────────────────────────────────────────────────────────────────
+✓ This is your valid e-ticket
+✓ Please present this ticket at the venue
+✓ A confirmation email has been sent
+✓ Keep this reference number safe
+
+Reference ID: ${ticket.code}
+
+═══════════════════════════════════════════════════════════════════
+
+For support, contact: support@eventfinder.com
+Website: www.eventfinder.com
+
+═══════════════════════════════════════════════════════════════════
+
+Generated on: ${new Date().toLocaleString('en-IN')}
+EventFinder - Your Ultimate Event Discovery Platform
+
+═══════════════════════════════════════════════════════════════════
+                    Thank you for booking with us!
+═══════════════════════════════════════════════════════════════════
+`;
+
                     const element = document.createElement("a");
-                    element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(`Ticket Code: ${ticket.code}\nEvent: ${ticket.eventTitle}\nQuantity: ${ticket.quantity}`));
-                    element.setAttribute("download", `ticket-${ticket.code}.txt`);
+                    const file = new Blob([ticketContent], { type: "text/plain;charset=utf-8" });
+                    const url = URL.createObjectURL(file);
+                    element.setAttribute("href", url);
+                    element.setAttribute("download", `EventFinder_Ticket_${ticket.code}.txt`);
                     element.style.display = "none";
                     document.body.appendChild(element);
                     element.click();
                     document.body.removeChild(element);
+                    URL.revokeObjectURL(url);
                   }}
                   className="flex-1 px-6 py-3 rounded-lg border border-purple-500/50 hover:bg-purple-600/20 text-white font-semibold transition-all duration-300 flex items-center justify-center gap-2"
                 >
@@ -469,9 +532,15 @@ export default function BookingModal({
                 </button>
                 <button
                   onClick={() => {
-                    const text = `I just booked tickets for ${ticket.eventTitle}! 🎉 Ticket Code: ${ticket.code}`;
+                    const text = `I just booked tickets for ${ticket.eventTitle}! 🎉
+Ticket Code: ${ticket.code}
+Date: ${ticket.eventDate}
+Tickets: ${ticket.quantity} × ${ticket.ticketType}
+Amount: ₹${Math.round(ticket.totalPrice * 1.05).toLocaleString('en-IN')}
+
+Book your tickets on EventFinder: www.eventfinder.com`;
                     navigator.clipboard.writeText(text);
-                    alert("Copied to clipboard!");
+                    alert("✓ Ticket details copied to clipboard!");
                   }}
                   className="flex-1 px-6 py-3 rounded-lg border border-pink-500/50 hover:bg-pink-600/20 text-white font-semibold transition-all duration-300 flex items-center justify-center gap-2"
                 >
