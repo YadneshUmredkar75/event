@@ -13,6 +13,7 @@ import {
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import EventCard from "@/components/EventCard";
+import BookingModal from "@/components/BookingModal";
 import { eventsData, Event } from "@/data/eventsData";
 
 export default function EventDetails() {
@@ -21,6 +22,8 @@ export default function EventDetails() {
   const [selectedTicketType, setSelectedTicketType] = useState<string | null>(
     null
   );
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const [ticketQuantity, setTicketQuantity] = useState(1);
 
   const event = eventsData.find((e) => e.id === id);
 
@@ -272,7 +275,11 @@ export default function EventDetails() {
                         <p className="text-gray-400 text-sm mb-3">
                           Number of Tickets
                         </p>
-                        <select className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-500/50 transition-all appearance-none cursor-pointer">
+                        <select
+                          value={ticketQuantity}
+                          onChange={(e) => setTicketQuantity(Number(e.target.value))}
+                          className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-500/50 transition-all appearance-none cursor-pointer"
+                        >
                           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
                             <option key={num} value={num}>
                               {num} {num === 1 ? "Ticket" : "Tickets"}
@@ -283,12 +290,14 @@ export default function EventDetails() {
                     )}
 
                     {/* Book Button */}
-                    <button className={`w-full py-4 rounded-lg font-bold text-white text-lg transition-all duration-300 flex items-center justify-center gap-2 ${
-                      selectedTicketType
-                        ? "bg-gradient-to-r from-purple-600 to-blue-600 hover:shadow-lg hover:shadow-purple-500/50"
-                        : "bg-gray-600 cursor-not-allowed opacity-50"
-                    }`}
-                    disabled={!selectedTicketType}
+                    <button
+                      onClick={() => setIsBookingModalOpen(true)}
+                      disabled={!selectedTicketType}
+                      className={`w-full py-4 rounded-lg font-bold text-white text-lg transition-all duration-300 flex items-center justify-center gap-2 ${
+                        selectedTicketType
+                          ? "bg-gradient-to-r from-purple-600 to-blue-600 hover:shadow-lg hover:shadow-purple-500/50"
+                          : "bg-gray-600 cursor-not-allowed opacity-50"
+                      }`}
                     >
                       <Ticket size={20} />
                       Book Now
@@ -378,6 +387,23 @@ export default function EventDetails() {
       </main>
 
       <Footer />
+
+      {/* Booking Modal */}
+      {selectedTicketType && (
+        <BookingModal
+          isOpen={isBookingModalOpen}
+          onClose={() => setIsBookingModalOpen(false)}
+          eventTitle={event.title}
+          eventArtist={event.artist}
+          eventDate={event.date}
+          eventTime={event.time}
+          ticketType={selectedTicketType}
+          ticketPrice={
+            ticketTypes.find((t) => t.type === selectedTicketType)?.price || 0
+          }
+          quantity={ticketQuantity}
+        />
+      )}
     </div>
   );
 }
